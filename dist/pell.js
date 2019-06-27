@@ -145,10 +145,10 @@ var defaultActions = {
 };
 
 var defaultClasses = {
-  actionbar: 'pell-actionbar',
-  button: 'pell-button',
+  actionbar: 'ui icon buttons',
+  button: 'ui basic button',
   content: 'pell-content',
-  selected: 'pell-button-selected'
+  selected: 'blue'
 };
 
 var init = function init(settings) {
@@ -190,14 +190,14 @@ var init = function init(settings) {
     button.className = classes.button;
     button.innerHTML = action.icon;
     button.title = action.title;
-    button.setAttribute('type', 'button');
+    // button.setAttribute('type', 'button');
     button.onclick = function () {
       return action.result() && content.focus();
     };
 
     if (action.state) {
       var handler = function handler() {
-        return button.classList[action.state() ? 'add' : 'remove'](classes.selected);
+        return button.firstChild.classList[action.state() ? 'add' : 'remove'](classes.selected);
       };
       addEventListener(content, 'keyup', handler);
       addEventListener(content, 'mouseup', handler);
