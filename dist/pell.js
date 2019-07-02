@@ -201,7 +201,7 @@
 
         var classes = _extends({}, defaultClasses, settings.classes);
 
-        var defaultParagraphSeparator = settings[defaultParagraphSeparatorString] || 'div';
+        var defaultParagraphSeparator = settings[defaultParagraphSeparatorString] || 'p';
 
         var actionbar = createElement('div');
         actionbar.className = classes.actionbar;
