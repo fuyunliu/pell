@@ -36,7 +36,7 @@
     };
 
     var exec = function exec(command) {
-        var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+        var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
         return document.execCommand(command, false, value);
     };
 
@@ -113,7 +113,7 @@
             icon: '<i class="quote left icon"></i>',
             title: 'Quote',
             result: function result() {
-                return exec(formatBlock, '<blockquote>');
+                return exec('insertHTML', '<blockquote><br></blockquote><br>');
             }
         },
         olist: {
@@ -134,7 +134,7 @@
             icon: '<i class="code icon"></i>',
             title: 'Code',
             result: function result() {
-                return exec(formatBlock, '<pre>');
+                return exec('insertHTML', '<pre><br></pre><br>')
             }
         },
         line: {
@@ -186,7 +186,7 @@
     var defaultClasses = {
         actionbar: 'ui icon buttons',
         button: 'ui basic button',
-        content: 'pell-content',
+        content: 'markdown-body',
         selected: 'blue'
     };
 
@@ -218,10 +218,17 @@
             settings.onChange(content.innerHTML);
         };
         content.onkeydown = function (event) {
-            if (event.key === 'Enter' && queryCommandValue(formatBlock) === 'blockquote') {
-                setTimeout(function () {
-                    return exec(formatBlock, '<' + defaultParagraphSeparator + '>');
-                }, 0);
+            let ele = window.getSelection().focusNode
+            let names = ['PRE', 'BLOCKQUOTE']
+            if (event.key === 'Enter') {
+                if (names.includes(ele.nodeName)) {
+                    ele.insertAdjacentHTML('beforeend', '<br>')
+                    return false
+                }
+                if (names.includes(ele.parentNode.nodeName)) {
+                    ele.parentNode.insertAdjacentHTML('beforeend', '<br>')
+                    return false
+                }
             }
         };
         appendChild(settings.element, content);

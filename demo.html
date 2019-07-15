@@ -1,51 +1,49 @@
 <!DOCTYPE html>
-<html>
-  <head>
-
+<html><head>
     <title>pell</title>
-
     <link rel="stylesheet" type="text/css" href="dist/semantic.min.css">
-
-  </head>
-  <body>
+    <link rel="stylesheet" type="text/css" href="dist/github-markdown.css">
+    <link href="https://cdn.bootcss.com/highlight.js/9.15.8/styles/github.min.css" rel="stylesheet">
+    <style type="text/css">
+        #editor .ui.button {
+            box-shadow: unset;
+        }
+        #editor div.markdown-body {
+            margin-top: 30px;
+        }
+        #editor div.markdown-body:focus {
+            outline: none;
+        }
+        #editor div.markdown-body:empty:before{
+            content: "What's on your mind?";
+            color: gray;
+        }
+    </style>
+</head>
+<body>
 
     <div class="ui container">
-      <h1 title="pell">pell</h1>
-      <div id="editor"></div>
-
-      <div>
-        <h3>Text output:</h3>
-        <div id="text-output"></div>
-      </div>
-
-      <div>
+        <h1 title="pell">pell</h1>
+        <div id="editor"></div>
+        <div class="ui divider"></div>
+        <div>
         <h3>HTML output:</h3>
         <pre id="html-output"></pre>
-      </div>
-
+        </div>
     </div>
-
 
     <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
     <script src="dist/semantic.min.js"></script>
     <script src="dist/pell.js"></script>
+    <script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
     <script>
       var editor = window.pell.init({
         element: document.getElementById('editor'),
         defaultParagraphSeparator: 'p',
         onChange: function (html) {
-          document.getElementById('text-output').innerHTML = html
-          document.getElementById('html-output').textContent = html
+            document.getElementById('html-output').textContent = html
         }
       })
     </script>
 
-    <style type="text/css">
-        div.pell-content:focus {
-            outline: none;
-        }
-    </style>
-
-
-  </body>
-</html>
+</body></html>
