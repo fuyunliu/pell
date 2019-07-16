@@ -1,14 +1,14 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
         typeof define === 'function' && define.amd ? define(['exports'], factory) :
-        (factory((global.pell = {})));
+            (factory((global.pell = {})));
 }(this, (function (exports) {
     'use strict';
 
-    var _extends = Object.assign || function (target) {
-        for (var i = 1; i < arguments.length; i++) {
-            var source = arguments[i];
-            for (var key in source) {
+    let _extends = Object.assign || function (target) {
+        for (let i = 1; i < arguments.length; i++) {
+            let source = arguments[i];
+            for (let key in source) {
                 if (Object.prototype.hasOwnProperty.call(source, key)) {
                     target[key] = source[key];
                 }
@@ -17,30 +17,30 @@
         return target;
     };
 
-    var defaultParagraphSeparatorString = 'defaultParagraphSeparator';
-    var formatBlock = 'formatBlock';
-    var addEventListener = function addEventListener(parent, type, listener) {
+    let defaultParagraphSeparatorString = 'defaultParagraphSeparator';
+    let formatBlock = 'formatBlock';
+    let addEventListener = function addEventListener(parent, type, listener) {
         return parent.addEventListener(type, listener);
     };
-    var appendChild = function appendChild(parent, child) {
+    let appendChild = function appendChild(parent, child) {
         return parent.appendChild(child);
     };
-    var createElement = function createElement(tag) {
+    let createElement = function createElement(tag) {
         return document.createElement(tag);
     };
-    var queryCommandState = function queryCommandState(command) {
+    let queryCommandState = function queryCommandState(command) {
         return document.queryCommandState(command);
     };
-    var queryCommandValue = function queryCommandValue(command) {
+    let queryCommandValue = function queryCommandValue(command) {
         return document.queryCommandValue(command);
     };
 
-    var exec = function exec(command) {
-        var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
+    let exec = function exec(command) {
+        let value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
         return document.execCommand(command, false, value);
     };
 
-    var defaultActions = {
+    let defaultActions = {
         bold: {
             icon: '<i class="bold icon"></i>',
             title: 'Bold',
@@ -148,7 +148,7 @@
             icon: '<i class="linkify icon"></i>',
             title: 'Link',
             result: function result() {
-                var url = window.prompt('Enter the link URL');
+                let url = window.prompt('Enter the link URL');
                 if (url) exec('createLink', url);
             }
         },
@@ -156,7 +156,7 @@
             icon: '<i class="image icon"></i>',
             title: 'Image',
             result: function result() {
-                var url = window.prompt('Enter the image URL');
+                let url = window.prompt('Enter the image URL');
                 if (url) exec('insertImage', url);
             }
         },
@@ -183,15 +183,15 @@
         },
     };
 
-    var defaultClasses = {
+    let defaultClasses = {
         actionbar: 'ui icon buttons',
         button: 'ui basic button',
         content: 'markdown-body',
         selected: 'blue'
     };
 
-    var init = function init(settings) {
-        var actions = settings.actions ? settings.actions.map(function (action) {
+    let init = function init(settings) {
+        let actions = settings.actions ? settings.actions.map(function (action) {
             if (typeof action === 'string') return defaultActions[action];
             else if (defaultActions[action.name]) return _extends({}, defaultActions[action.name], action);
             return action;
@@ -199,19 +199,19 @@
             return defaultActions[action];
         });
 
-        var classes = _extends({}, defaultClasses, settings.classes);
+        let classes = _extends({}, defaultClasses, settings.classes);
 
-        var defaultParagraphSeparator = settings[defaultParagraphSeparatorString] || 'p';
+        let defaultParagraphSeparator = settings[defaultParagraphSeparatorString] || 'p';
 
-        var actionbar = createElement('div');
+        let actionbar = createElement('div');
         actionbar.className = classes.actionbar;
         appendChild(settings.element, actionbar);
 
-        var content = settings.element.content = createElement('div');
+        let content = settings.element.content = createElement('div');
         content.contentEditable = true;
         content.className = classes.content;
         content.oninput = function (_ref) {
-            var firstChild = _ref.target.firstChild;
+            let firstChild = _ref.target.firstChild;
 
             if (firstChild && firstChild.nodeType === 3) exec(formatBlock, '<' + defaultParagraphSeparator + '>');
             else if (content.innerHTML === '<br>') content.innerHTML = '';
@@ -234,7 +234,7 @@
         appendChild(settings.element, content);
 
         actions.forEach(function (action) {
-            var button = createElement('button');
+            let button = createElement('button');
             button.className = classes.button;
             button.innerHTML = action.icon;
             button.title = action.title;
@@ -243,7 +243,7 @@
             };
 
             if (action.state) {
-                var handler = function handler() {
+                let handler = function handler() {
                     return button.firstChild.classList[action.state() ? 'add' : 'remove'](classes.selected);
                 };
                 addEventListener(content, 'keyup', handler);
@@ -260,7 +260,7 @@
         return settings.element;
     };
 
-    var pell = {
+    let pell = {
         exec: exec,
         init: init
     };
